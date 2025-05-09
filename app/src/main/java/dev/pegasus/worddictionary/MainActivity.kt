@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import dev.pegasus.worddictionary.databinding.ActivityMainBinding
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         fullScreen()
         initObservers()
+
+        binding.svBarInc.setOnQueryTextListener(queryTextListener)
     }
 
     private fun fullScreen() {
@@ -70,5 +73,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadWebViewData(htmlData: String) {
         binding.webViewSimpleDictionary.loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
+    }
+
+    private val queryTextListener = object : SearchView.OnQueryTextListener {
+        override fun onQueryTextChange(newText: String?): Boolean {
+            return false
+        }
+
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            viewModel.getSimpleDictionary(query)
+            binding.svBarInc.clearFocus()
+            return true
+        }
     }
 }
