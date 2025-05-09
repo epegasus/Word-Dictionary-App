@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Word Dictionary</string>
+
+    <string name="toast_no_internet_connection">No internet connection</string>
+    <string name="toast_no_result_found">No result found</string>
+    <string name="toast_something_went_wrong">Oops! Something went wrong.</string>
+    <string name="toast_please_enter_text_before_searching">Please enter text before searching</string>
+
+    <string name="type_word">Type Word…</string>
+
+    <!-- DialogProcessing -->
+    <string name="please_wait">Please Wait....</string>
+    <string name="processing_your_request">Processing your request</string>
+
+</resources>
