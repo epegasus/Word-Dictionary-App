@@ -14,7 +14,7 @@ import retrofit2.http.Path
  * - GitHub: https://github.com/epegasus
  */
 
-interface ApiServiceSimpleDictionary {
+interface ApiServiceDictionary {
 
     @GET("api/v2/entries/en/{word}")
     suspend fun getMeaning(@Path("word") word: String): Response<ResponseBody>

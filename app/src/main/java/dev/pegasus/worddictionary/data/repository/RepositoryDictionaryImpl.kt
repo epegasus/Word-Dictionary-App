@@ -1,7 +1,7 @@
 package dev.pegasus.worddictionary.data.repository
 
 import dev.pegasus.worddictionary.data.dataSources.DataSourceRemoteDictionary
-import dev.pegasus.worddictionary.domain.repository.RepositorySimpleDictionary
+import dev.pegasus.worddictionary.domain.repository.RepositoryDictionary
 import dev.pegasus.worddictionary.presentation.uiStates.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -17,9 +17,9 @@ import kotlinx.coroutines.withContext
  */
 
 
-class RepositoryDictionaryImpl(private val dataSourceRemote: DataSourceRemoteDictionary) : RepositorySimpleDictionary {
+class RepositoryDictionaryImpl(private val dataSourceRemote: DataSourceRemoteDictionary) : RepositoryDictionary {
 
-    override suspend fun getSimpleDictionary(query: String): Flow<ApiResponse<String>> = withContext(Dispatchers.IO) {
-        return@withContext dataSourceRemote.getSimpleDictionary(query)
+    override suspend fun getDictionary(query: String): Flow<ApiResponse<String>> = withContext(Dispatchers.IO) {
+        return@withContext dataSourceRemote.getDictionary(query)
     }
 }

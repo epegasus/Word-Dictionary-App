@@ -1,6 +1,6 @@
 package dev.pegasus.worddictionary.data.dataSources.retrofit
 
-import dev.pegasus.worddictionary.data.dataSources.retrofit.api.ApiServiceSimpleDictionary
+import dev.pegasus.worddictionary.data.dataSources.retrofit.api.ApiServiceDictionary
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -31,12 +31,12 @@ object RetrofitInstanceDictionary {
         .connectTimeout(1, TimeUnit.MINUTES)
         .build()
 
-    val api: ApiServiceSimpleDictionary by lazy {
+    val api: ApiServiceDictionary by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create()) // plain string response
             .client(client)
             .build()
-            .create(ApiServiceSimpleDictionary::class.java)
+            .create(ApiServiceDictionary::class.java)
     }
 }

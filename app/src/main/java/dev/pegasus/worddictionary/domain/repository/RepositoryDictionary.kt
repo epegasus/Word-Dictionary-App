@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  * - GitHub: https://github.com/epegasus
  */
 
-interface RepositorySimpleDictionary {
-    suspend fun getSimpleDictionary(query: String): Flow<ApiResponse<String>>
+interface RepositoryDictionary {
+    suspend fun getDictionary(query: String): Flow<ApiResponse<String>>
 
 }

@@ -28,11 +28,8 @@ class UseCaseDictionary(
     private val internetManager: InternetManager,
     private val webViewUtils: WebViewUtils
 ) {
-
-    private var resultText = ""
-
-    suspend fun getSimpleDictionary(queryText: String?): Flow<ApiResponse<String>> {
-        Log.d(TAG, "UseCaseSimpleDictionary: getSimpleDictionary: query: $queryText")
+    suspend fun getDictionary(queryText: String?): Flow<ApiResponse<String>> {
+        Log.d(TAG, "UseCaseDictionary: getDictionary: query: $queryText")
         if (queryText?.trim().isNullOrEmpty()) {
             return flowOf(ApiResponse.Failure(R.string.toast_please_enter_text_before_searching))
         }
@@ -43,9 +40,8 @@ class UseCaseDictionary(
 
         val query = queryText.trim()
 
-        return repositoryDictionaryImpl.getSimpleDictionary(query)
+        return repositoryDictionaryImpl.getDictionary(query)
             .map { response ->
-                resultText = ""
                 when (response) {
                     is ApiResponse.Success -> onApiSuccessResponse(response)
                     is ApiResponse.Loading -> ApiResponse.Loading
@@ -53,23 +49,16 @@ class UseCaseDictionary(
                 }
             }.flowOn(Dispatchers.Default)
             .catch {
-                Log.e(TAG, "UseCaseSimpleDictionary: getSimpleDictionary: Exception:", it)
+                Log.e(TAG, "UseCaseDictionary: getDictionary: Exception:", it)
                 emit(ApiResponse.Failure(R.string.toast_something_went_wrong))
             }
     }
 
-    private suspend fun onApiSuccessResponse(response: ApiResponse.Success<String>): ApiResponse.Success<String> {
+    private fun onApiSuccessResponse(response: ApiResponse.Success<String>): ApiResponse.Success<String> {
         val parseJsonDictionary = webViewUtils.getParseJsonDictionary(response.data)
         val webViewText = webViewUtils.getWebViewData(false, parseJsonDictionary)
-        val cleanText = webViewUtils.extractCleanText(parseJsonDictionary)
-        resultText = cleanText // Clean Text
+        val cleanText = webViewUtils.extractCleanText(parseJsonDictionary) // to Share
 
         return ApiResponse.Success(webViewText)
-    }
-
-    fun getResultText(): String = resultText
-
-    fun clearResultText() {
-        resultText = ""
     }
 }

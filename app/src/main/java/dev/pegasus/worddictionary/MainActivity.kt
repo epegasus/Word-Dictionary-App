@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         initObservers()
 
         binding.svBarInc.setOnQueryTextListener(queryTextListener)
+        binding.mbCrossSimpleDictionary.setOnClickListener { onClearClick() }
     }
 
     private fun fullScreen() {
@@ -73,6 +74,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadWebViewData(htmlData: String) {
         binding.webViewSimpleDictionary.loadDataWithBaseURL(null, htmlData, "text/html", "UTF-8", null)
+    }
+
+    private fun onClearClick() {
+        binding.svBarInc.setQuery("", false)
+        loadWebViewData("")
     }
 
     private val queryTextListener = object : SearchView.OnQueryTextListener {
